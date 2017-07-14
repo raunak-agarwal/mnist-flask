@@ -8,15 +8,15 @@ from skimage import io as skio
 from skimage.transform import resize
 from utils import make_mnist
 
-app = Flask(__name__, static_url_path='/static')
+application = Flask(__name__, static_url_path='/static')
 clf = joblib.load('clf.pkl')
 
 
-@app.route('/')
+@application.route('/')
 def display_gui():
     return render_template('template.html')
 
-@app.route('/recognizer', methods=['POST'])
+@application.route('/recognizer', methods=['POST'])
 def recognize():
     data = request.get_json(silent=True)['image']
     data = data[22:]
@@ -30,4 +30,4 @@ def recognize():
     return make_response(str(number),200)
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', debug=True, use_reloader=True)
+	application.run(host='0.0.0.0', debug=True, use_reloader=True)
